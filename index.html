@@ -400,7 +400,7 @@
         <div class="scenario-card">
           <div class="scenario-row">
             <div class="s-dot" style="background:#ff4444;box-shadow:0 0 6px rgba(255,68,68,0.5)"></div>
-            <div class="s-text"><strong>SuperWash</strong> — 0.8km <span class="s-arrow">·</span> Very busy</div>
+            <div class="s-text"><strong>SuperWash</strong> — 0.8km <span class="s-arrow">·</span> Avoid now</div>
           </div>
           <div class="scenario-row">
             <div class="s-dot" style="background:#ffbb33;box-shadow:0 0 6px rgba(255,187,51,0.5)"></div>
@@ -408,7 +408,7 @@
           </div>
           <div class="scenario-row">
             <div class="s-dot" style="background:#00c851;box-shadow:0 0 6px rgba(0,200,81,0.5)"></div>
-            <div class="s-text"><strong>ClearSplash</strong> — 1.6km <span class="s-arrow">·</span> <strong style="color:#00c851">Quiet now ↗</strong></div>
+            <div class="s-text"><strong>ClearSplash</strong> — 1.6km <span class="s-arrow">·</span> <strong style="color:#00c851">Go now ↗</strong></div>
           </div>
         </div>
 
@@ -469,7 +469,7 @@
         <!-- Best right now banner -->
         <div class="best-banner" onclick="openSheet('ClearSplash Wash','green','0.4 km','high','Drive 4 min further → save ~20 min waiting',8)">
           <div class="best-dot"></div>
-          <div class="best-text"><strong>Best right now: ClearSplash</strong> · 4 min away · quiet</div>
+          <div class="best-text"><strong>Go now: ClearSplash</strong> · 4 min away · no queue</div>
           <div class="best-arrow">›</div>
         </div>
 
@@ -488,19 +488,19 @@
 
         <!-- Pins -->
         <div class="pin pin-recommended" style="left:23%;top:36%" onclick="openSheet('ClearSplash Wash','green','0.4 km','high','Drive 4 min further → save ~20 min waiting',8)">
-          <div class="pin-bubble"><div class="pin-dot dot-green"></div><div><div class="pin-name">ClearSplash</div><div class="pin-dist">0.4 km · Quiet</div><div class="pin-reports">8 reports · live</div></div></div>
+          <div class="pin-bubble"><div class="pin-dot dot-green"></div><div><div class="pin-name">ClearSplash</div><div class="pin-dist">0.4 km · Go now</div><div class="pin-reports">8 reports · live</div></div></div>
         </div>
 
         <div class="pin" style="left:74%;top:27%" onclick="openSheet('AutoShine Express','amber','1.1 km','low','2 reports only — check before you go',2)">
-          <div class="pin-bubble"><div class="pin-dot dot-amber"></div><div><div class="pin-name">AutoShine</div><div class="pin-dist">1.1 km · Moderate</div><div class="pin-reports">2 reports · live</div></div></div>
+          <div class="pin-bubble"><div class="pin-dot dot-amber"></div><div><div class="pin-name">AutoShine</div><div class="pin-dist">1.1 km · Short wait</div><div class="pin-reports">2 reports · live</div></div></div>
         </div>
 
-        <div class="pin" style="left:55%;top:66%" onclick="openSheet('SuperWash Pro','red','1.8 km','high','Go to ClearSplash → same price, 15 min shorter wait',14)">
-          <div class="pin-bubble"><div class="pin-dot dot-red"></div><div><div class="pin-name">SuperWash Pro</div><div class="pin-dist">1.8 km · Busy</div><div class="pin-reports">14 reports · live</div></div></div>
+        <div class="pin" style="left:55%;top:66%" onclick="openSheet('SuperWash Pro','red','1.8 km','high','Skip this · ClearSplash is clear right now — save 15 min',14)">
+          <div class="pin-bubble"><div class="pin-dot dot-red"></div><div><div class="pin-name">SuperWash Pro</div><div class="pin-dist">1.8 km · Avoid now</div><div class="pin-reports">14 reports · live</div></div></div>
         </div>
 
         <div class="pin" style="left:34%;top:70%" onclick="openSheet('Gleam &amp; Go','green','2.1 km','high','Consistently quiet on Sunday mornings',5)">
-          <div class="pin-bubble"><div class="pin-dot dot-green"></div><div><div class="pin-name">Gleam & Go</div><div class="pin-dist">2.1 km · Quiet</div><div class="pin-reports">5 reports · live</div></div></div>
+          <div class="pin-bubble"><div class="pin-dot dot-green"></div><div><div class="pin-name">Gleam & Go</div><div class="pin-dist">2.1 km · Go now</div><div class="pin-reports">5 reports · live</div></div></div>
         </div>
 
         <!-- No-data pin (empty state demo) -->
@@ -569,9 +569,9 @@
           </div>
 
           <div class="sheet-actions">
-            <button class="btn-directions" onclick="closeSheet()">
+            <button class="btn-directions" id="btn-directions" onclick="closeSheet()">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
-              Get Directions
+              <span id="btn-directions-label">Get Directions</span>
             </button>
             <button class="btn-notify" id="btn-notify-sheet" onclick="goNotify()">
               <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
@@ -600,15 +600,15 @@
       <div class="report-options">
         <div class="report-option" id="opt-green" onclick="selectReport('green')">
           <div class="report-icon icon-green">🟢</div>
-          <div><div class="report-label">Not busy</div><div class="report-desc">Drive straight in, no wait</div></div>
+          <div><div class="report-label">No queue — go now</div><div class="report-desc">Drive straight in, no wait</div></div>
         </div>
         <div class="report-option" id="opt-amber" onclick="selectReport('amber')">
           <div class="report-icon icon-amber">🟡</div>
-          <div><div class="report-label">Moderate</div><div class="report-desc">Short wait, a few cars ahead</div></div>
+          <div><div class="report-label">Short wait</div><div class="report-desc">A few cars ahead, worth staying</div></div>
         </div>
         <div class="report-option" id="opt-red" onclick="selectReport('red')">
           <div class="report-icon icon-red">🔴</div>
-          <div><div class="report-label">Very busy</div><div class="report-desc">Long queue, consider another wash</div></div>
+          <div><div class="report-label">Long queue — avoid</div><div class="report-desc">Big wait, others need to know</div></div>
         </div>
       </div>
       <button class="btn-submit" id="btn-submit" onclick="submitReport()">Submit Report</button>
@@ -654,17 +654,17 @@
 </div><!-- phone -->
 
 <div style="display:flex;gap:20px;margin-top:16px;justify-content:center;">
-  <div style="display:flex;align-items:center;gap:6px;color:#444;font-size:11px;"><div style="width:9px;height:9px;border-radius:50%;background:#00c851;box-shadow:0 0 6px rgba(0,200,81,0.6)"></div>Quiet</div>
-  <div style="display:flex;align-items:center;gap:6px;color:#444;font-size:11px;"><div style="width:9px;height:9px;border-radius:50%;background:#ffbb33;box-shadow:0 0 6px rgba(255,187,51,0.6)"></div>Moderate</div>
-  <div style="display:flex;align-items:center;gap:6px;color:#444;font-size:11px;"><div style="width:9px;height:9px;border-radius:50%;background:#ff4444;box-shadow:0 0 6px rgba(255,68,68,0.6)"></div>Busy</div>
+  <div style="display:flex;align-items:center;gap:6px;color:#444;font-size:11px;"><div style="width:9px;height:9px;border-radius:50%;background:#00c851;box-shadow:0 0 6px rgba(0,200,81,0.6)"></div>Go now</div>
+  <div style="display:flex;align-items:center;gap:6px;color:#444;font-size:11px;"><div style="width:9px;height:9px;border-radius:50%;background:#ffbb33;box-shadow:0 0 6px rgba(255,187,51,0.6)"></div>Short wait</div>
+  <div style="display:flex;align-items:center;gap:6px;color:#444;font-size:11px;"><div style="width:9px;height:9px;border-radius:50%;background:#ff4444;box-shadow:0 0 6px rgba(255,68,68,0.6)"></div>Avoid now</div>
   <div style="display:flex;align-items:center;gap:6px;color:#333;font-size:11px;">v4 — tap any pin</div>
 </div>
 
 <script>
   const statusData = {
-    green: { label:'Quiet now',  badgeClass:'badge-green', dotClass:'dot-green', nowLabel:'Usually quiet now', bars:[2,3,4,5,6,6,5,4,5,6,7,4,3,2] },
-    amber: { label:'Moderate',   badgeClass:'badge-amber', dotClass:'dot-amber', nowLabel:'Getting busier now', bars:[3,4,6,8,9,9,8,7,8,9,7,5,4,3] },
-    red:   { label:'Very busy',  badgeClass:'badge-red',   dotClass:'dot-red',   nowLabel:'Peak hours right now', bars:[4,5,7,9,10,10,9,8,9,10,9,7,5,3] }
+    green: { label:'Go now',     badgeClass:'badge-green', dotClass:'dot-green', nowLabel:'Clear right now', bars:[2,3,4,5,6,6,5,4,5,6,7,4,3,2] },
+    amber: { label:'Short wait', badgeClass:'badge-amber', dotClass:'dot-amber', nowLabel:'Getting busier now', bars:[3,4,6,8,9,9,8,7,8,9,7,5,4,3] },
+    red:   { label:'Avoid now',  badgeClass:'badge-red',   dotClass:'dot-red',   nowLabel:'Peak time — consider an alternative', bars:[4,5,7,9,10,10,9,8,9,10,9,7,5,3] }
   };
 
   const barColors = { green:'#00c851', amber:'#ffbb33', red:'#ff4444' };
@@ -733,6 +733,25 @@
     document.querySelector('.timeline').style.display = isEmptyState ? 'none' : 'block';
     document.querySelector('.sheet-actions').style.display = isEmptyState ? 'none' : 'flex';
     document.querySelector('.btn-report-sheet').style.display = isEmptyState ? 'none' : 'flex';
+
+    // Dynamic directions button
+    if (!isEmpty) {
+      const dirBtn = document.getElementById('btn-directions');
+      const dirLabel = document.getElementById('btn-directions-label');
+      if (status === 'green') {
+        dirLabel.textContent = 'Go now →';
+        dirBtn.style.background = 'linear-gradient(135deg,#00c851,#00a844)';
+        dirBtn.style.boxShadow = '0 4px 20px rgba(0,200,81,0.35)';
+      } else if (status === 'red') {
+        dirLabel.textContent = 'Find alternative';
+        dirBtn.style.background = 'linear-gradient(135deg,#c0392b,#922b21)';
+        dirBtn.style.boxShadow = '0 4px 20px rgba(255,68,68,0.3)';
+      } else {
+        dirLabel.textContent = 'Get Directions';
+        dirBtn.style.background = 'linear-gradient(135deg,#1a6dff,#0052cc)';
+        dirBtn.style.boxShadow = '0 4px 20px rgba(26,109,255,0.35)';
+      }
+    }
 
     if (!isEmpty) buildTimeline(status);
     document.getElementById('bottom-sheet').classList.add('open');
