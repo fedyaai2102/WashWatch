@@ -41,7 +41,8 @@
 
   .onboard-content { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 32px; text-align: center; }
 
-  .onboard-logo { width: 84px; height: 84px; background: linear-gradient(135deg, #1a6dff, #00c6ff); border-radius: 24px; display: flex; align-items: center; justify-content: center; margin-bottom: 28px; box-shadow: 0 0 0 1px rgba(26,109,255,0.3), 0 8px 40px rgba(26,109,255,0.4); }
+  .onboard-logo { width: 140px; height: 140px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+  .onboard-logo img { width: 140px; height: 140px; object-fit: contain; mix-blend-mode: screen; }
 
   /* Scenario card — NEW in v3 */
   .scenario-card {
@@ -77,6 +78,76 @@
   #screen-map { background: #111827; }
 
   .map-bg { position: absolute; inset: 0; background: linear-gradient(rgba(26,35,50,0.8) 1px, transparent 1px), linear-gradient(90deg, rgba(26,35,50,0.8) 1px, transparent 1px); background-size: 36px 36px; background-color: #111827; }
+
+  /* Dubai skyline silhouette */
+  .map-bg::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 180px;
+    background: linear-gradient(to top, rgba(17,24,39,0.95) 0%, transparent 100%);
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 100'%3E%3Cpath d='M0 100V85h10V60h5V50h3V35h4V50h3V60h5V70h8V55h4V40h2V25h2V15h2V25h2V40h4V55h8V65h10V75h15V60h5V50h3V40h4V50h3V60h5V70h20V60h4V75h15V68h8V58h3V48h2V35h2V48h3V58h8V65h12V55h5V65h6V72h10V65h8V78h15V68h10V60h5V70h10V62h5V45h3V30h4V45h3V62h5V70h10V78h15V85h20V100z' fill='rgba(17,24,39,0.5)'/%3E%3C/svg%3E");
+    mask-size: cover;
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 100'%3E%3Cpath d='M0 100V85h10V60h5V50h3V35h4V50h3V60h5V70h8V55h4V40h2V25h2V15h2V25h2V40h4V55h8V65h10V75h15V60h5V50h3V40h4V50h3V60h5V70h20V60h4V75h15V68h8V58h3V48h2V35h2V48h3V58h8V65h12V55h5V65h6V72h10V65h8V78h15V68h10V60h5V70h10V62h5V45h3V30h4V45h3V62h5V70h10V78h15V85h20V100z' fill='rgba(17,24,39,0.5)'/%3E%3C/svg%3E");
+    -webkit-mask-size: cover;
+    pointer-events: none;
+    opacity: 0.3;
+  }
+
+  /* Best right now banner */
+  .best-banner {
+    position: absolute;
+    top: 165px;
+    left: 14px; right: 14px;
+    z-index: 20;
+    background: linear-gradient(135deg, rgba(0,200,81,0.12), rgba(0,200,81,0.05));
+    border: 1px solid rgba(0,200,81,0.2);
+    border-radius: 12px;
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    backdrop-filter: blur(10px);
+    cursor: pointer;
+  }
+  .best-dot { width: 9px; height: 9px; border-radius: 50%; background: #00c851; box-shadow: 0 0 8px rgba(0,200,81,0.6); flex-shrink: 0; }
+  .best-text { font-size: 12px; color: rgba(255,255,255,0.6); flex: 1; }
+  .best-text strong { color: #00c851; font-weight: 600; }
+  .best-arrow { font-size: 14px; color: rgba(0,200,81,0.5); }
+
+  /* Language toggle */
+  .lang-toggle {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    z-index: 25;
+    display: flex;
+    background: rgba(14,17,23,0.9);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 8px;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+  }
+  .lang-btn {
+    padding: 4px 8px;
+    font-size: 9px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.3);
+    cursor: pointer;
+    border: none;
+    background: none;
+    letter-spacing: 0.3px;
+  }
+  .lang-btn.active { color: #7eb8ff; background: rgba(26,109,255,0.15); }
+
+  /* Recommended pin larger */
+  .pin-recommended .pin-bubble {
+    transform: scale(1.12);
+    border-color: rgba(0,200,81,0.3);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5), 0 0 12px rgba(0,200,81,0.15);
+  }
 
   .map-road-h { position: absolute; height: 6px; background: #1e2d40; border-radius: 3px; left: 0; right: 0; }
   .map-road-v { position: absolute; width: 6px; background: #1e2d40; border-radius: 3px; top: 0; bottom: 0; }
@@ -320,11 +391,7 @@
       <div class="onboard-content">
 
         <div class="onboard-logo">
-          <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
-            <circle cx="22" cy="22" r="16" fill="rgba(255,255,255,0.1)"/>
-            <path d="M22 8C22 8 13 14 13 22C13 27.52 17.03 32 22 32C26.97 32 31 27.52 31 22C31 14 22 8 22 8Z" fill="white"/>
-            <circle cx="22" cy="22" r="5" fill="#1a6dff"/>
-          </svg>
+          <svg width="60" height="75" viewBox="0 0 80 100"><circle cx="40" cy="36" r="28" fill="none" stroke="rgba(26,115,232,0.15)" stroke-width="2"/><path d="M40 88 C40 88 14 52 14 34 C14 19.6 25.6 8 40 8 C54.4 8 66 19.6 66 34 C66 52 40 88 40 88Z" fill="#1A73E8"/><rect x="28" y="30" width="24" height="10" rx="5" fill="white" opacity="0.9"/><rect x="31" y="25" width="18" height="8" rx="3" fill="white" opacity="0.9"/><circle cx="33" cy="41" r="3" fill="#0D47A1"/><circle cx="33" cy="41" r="1.5" fill="#1A73E8"/><circle cx="47" cy="41" r="3" fill="#0D47A1"/><circle cx="47" cy="41" r="1.5" fill="#1A73E8"/><circle cx="56" cy="24" r="4" fill="rgba(0,200,255,0.3)" stroke="rgba(0,200,255,0.5)" stroke-width="0.8"/><circle cx="62" cy="30" r="2.5" fill="rgba(0,200,255,0.25)" stroke="rgba(0,200,255,0.4)" stroke-width="0.8"/><circle cx="58" cy="18" r="2" fill="rgba(0,200,255,0.2)" stroke="rgba(0,200,255,0.35)" stroke-width="0.8"/></svg>
         </div>
 
         <div class="onboard-headline">Skip long queues.<br><span>Know before you go.</span></div>
@@ -352,7 +419,7 @@
         </div>
 
         <button class="btn-primary" onclick="showScreen('map');setNav('map')">Get Started — It's Free</button>
-        <button class="btn-ghost">Skip for now</button>
+        <button class="btn-ghost" onclick="showScreen('map');setNav('map')">Preview map first</button>
       </div>
     </div>
 
@@ -378,6 +445,13 @@
           </div>
         </div>
 
+        <!-- Language toggle -->
+        <div class="lang-toggle">
+          <button class="lang-btn active">EN</button>
+          <button class="lang-btn">عربي</button>
+          <button class="lang-btn">اردو</button>
+        </div>
+
         <!-- Search + Pills -->
         <div class="map-overlay-top">
           <div class="map-brand">Skip car wash queues <span>· know before you go</span></div>
@@ -392,8 +466,15 @@
           </div>
         </div>
 
+        <!-- Best right now banner -->
+        <div class="best-banner" onclick="openSheet('ClearSplash Wash','green','0.4 km','high','Drive 4 min further → save ~20 min waiting',8)">
+          <div class="best-dot"></div>
+          <div class="best-text"><strong>Best right now: ClearSplash</strong> · 4 min away · quiet</div>
+          <div class="best-arrow">›</div>
+        </div>
+
         <!-- Live activity bar — NEW v3 -->
-        <div class="live-bar">
+        <div class="live-bar" style="top:210px">
           <div class="live-dot"></div>
           <div class="live-text"><strong>7 reports</strong> in the last 30 min near you</div>
           <div class="live-time">Live</div>
@@ -406,7 +487,7 @@
         <div class="pin-pulse pulse-green" style="left:34%;top:70%"></div>
 
         <!-- Pins -->
-        <div class="pin" style="left:23%;top:36%" onclick="openSheet('ClearSplash Wash','green','0.4 km','high','Drive 4 min further → save ~20 min waiting',8)">
+        <div class="pin pin-recommended" style="left:23%;top:36%" onclick="openSheet('ClearSplash Wash','green','0.4 km','high','Drive 4 min further → save ~20 min waiting',8)">
           <div class="pin-bubble"><div class="pin-dot dot-green"></div><div><div class="pin-name">ClearSplash</div><div class="pin-dist">0.4 km · Quiet</div><div class="pin-reports">8 reports · live</div></div></div>
         </div>
 
@@ -515,6 +596,7 @@
         <div class="report-title">How busy is it?</div>
       </div>
       <div class="report-subtitle">ClearSplash Wash · Right now</div>
+      <div style="padding:8px 20px 0 68px;font-size:11px;color:rgba(255,255,255,0.2)">Takes 2 seconds · helps other drivers nearby</div>
       <div class="report-options">
         <div class="report-option" id="opt-green" onclick="selectReport('green')">
           <div class="report-icon icon-green">🟢</div>
@@ -536,7 +618,7 @@
     <div class="screen" id="screen-thanks">
       <div class="thanks-icon">✓</div>
       <div class="thanks-title">Thanks!</div>
-      <div class="thanks-sub">Your report helps everyone find a quiet wash faster.</div>
+      <div class="thanks-sub">3 people nearby can now see this update. Your report makes everyone's Sunday better.</div>
       <div class="thanks-points">⭐ +10 points · 3 reports total</div>
       <button class="btn-primary" onclick="showScreen('map');setNav('map');closeSheet()" style="width:280px">Back to Map</button>
     </div>
@@ -575,7 +657,7 @@
   <div style="display:flex;align-items:center;gap:6px;color:#444;font-size:11px;"><div style="width:9px;height:9px;border-radius:50%;background:#00c851;box-shadow:0 0 6px rgba(0,200,81,0.6)"></div>Quiet</div>
   <div style="display:flex;align-items:center;gap:6px;color:#444;font-size:11px;"><div style="width:9px;height:9px;border-radius:50%;background:#ffbb33;box-shadow:0 0 6px rgba(255,187,51,0.6)"></div>Moderate</div>
   <div style="display:flex;align-items:center;gap:6px;color:#444;font-size:11px;"><div style="width:9px;height:9px;border-radius:50%;background:#ff4444;box-shadow:0 0 6px rgba(255,68,68,0.6)"></div>Busy</div>
-  <div style="display:flex;align-items:center;gap:6px;color:#333;font-size:11px;">v3 — tap any pin</div>
+  <div style="display:flex;align-items:center;gap:6px;color:#333;font-size:11px;">v4 — tap any pin</div>
 </div>
 
 <script>
@@ -632,20 +714,25 @@
     const confText = document.getElementById('conf-text');
     if (isEmpty) {
       confBadge.className = 'confidence-badge';
-      confText.textContent = 'No reports yet';
+      confBadge.style.display = 'none';
     } else if (conf === 'high') {
       confBadge.className = 'confidence-badge conf-high';
+      confBadge.style.display = 'flex';
       confText.textContent = 'Based on ' + reports + ' reports · High confidence';
     } else {
       confBadge.className = 'confidence-badge conf-low';
-      confText.textContent = 'Based on ' + reports + ' reports · Low confidence';
+      confBadge.style.display = 'flex';
+      confText.textContent = reports + ' reports only · Low confidence';
     }
 
     // Toggle empty state vs normal content
-    document.getElementById('sheet-empty').style.display = isEmpty ? 'flex' : 'none';
-    document.getElementById('drive-banner').style.display = isEmpty ? 'none' : 'flex';
-    document.getElementById('drive-text').innerHTML = isEmpty ? '' : '<strong>' + driveMsg + '</strong>';
-    document.querySelector('.timeline').style.display = isEmpty ? 'none' : 'block';
+    const isEmptyState = isEmpty;
+    document.getElementById('sheet-empty').style.display = isEmptyState ? 'flex' : 'none';
+    document.getElementById('drive-banner').style.display = isEmptyState ? 'none' : 'flex';
+    document.getElementById('drive-text').innerHTML = isEmptyState ? '' : '<strong>' + driveMsg + '</strong>';
+    document.querySelector('.timeline').style.display = isEmptyState ? 'none' : 'block';
+    document.querySelector('.sheet-actions').style.display = isEmptyState ? 'none' : 'flex';
+    document.querySelector('.btn-report-sheet').style.display = isEmptyState ? 'none' : 'flex';
 
     if (!isEmpty) buildTimeline(status);
     document.getElementById('bottom-sheet').classList.add('open');
