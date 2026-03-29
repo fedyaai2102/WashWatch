@@ -354,8 +354,8 @@
 <p class="proto-label">WashWatch — Prototype v5</p>
 
 <div class="screen-nav">
-  <button onclick="showScreen('onboard')" id="nav-onboard" class="active">Onboarding</button>
-  <button onclick="showScreen('map');closeSheet()" id="nav-map">Map View</button>
+  <button onclick="showScreen('onboard');setNav('onboard')" id="nav-onboard" class="active">Onboarding</button>
+  <button onclick="showScreen('map');closeSheet();setNav('map')" id="nav-map">Map View</button>
   <button onclick="goReport()" id="nav-report">Report</button>
   <button onclick="goNotify()" id="nav-notify">Notify Me</button>
 </div>
@@ -397,8 +397,8 @@
           <span class="active"></span><span></span><span></span>
         </div>
 
-        <button class="btn-primary" onclick="showScreen('map')">Get Started — It's Free</button>
-        <button class="btn-ghost" onclick="showScreen('map')">Preview map first</button>
+        <button class="btn-primary" onclick="showScreen('map');setNav('map')">Get Started — It's Free</button>
+        <button class="btn-ghost" onclick="showScreen('map');setNav('map')">Preview map first</button>
       </div>
     </div>
 
@@ -572,12 +572,12 @@
     <div class="screen" id="screen-report">
       <div class="status-bar"></div>
       <div class="report-header">
-        <button class="back-btn" onclick="showScreen('map');closeSheet()">
+        <button class="back-btn" onclick="showScreen('map');setNav('map');closeSheet()">
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
         </button>
         <div class="report-title">How busy is it?</div>
       </div>
-      <div class="report-subtitle" id="report-subtitle">ClearSplash Wash · Right now</div>
+      <div class="report-subtitle">ClearSplash Wash · Right now</div>
       <div style="padding:8px 20px 0 68px;font-size:11px;color:rgba(255,255,255,0.2)">Takes 2 seconds · helps other drivers nearby</div>
       <div class="report-options">
         <div class="report-option" id="opt-green" onclick="selectReport('green')">
@@ -602,14 +602,14 @@
       <div class="thanks-title">Thanks!</div>
       <div class="thanks-sub">3 people nearby can now see this update. Your report makes everyone's Sunday better.</div>
       <div class="thanks-points">⭐ +10 points · 3 reports total</div>
-      <button class="btn-primary" onclick="showScreen('map');closeSheet()" style="width:280px">Back to Map</button>
+      <button class="btn-primary" onclick="showScreen('map');setNav('map');closeSheet()" style="width:280px">Back to Map</button>
     </div>
 
     <!-- ── NOTIFY ── -->
     <div class="screen" id="screen-notify">
       <div class="status-bar"></div>
       <div class="notify-header">
-        <button class="back-btn" onclick="showScreen('map');closeSheet()">
+        <button class="back-btn" onclick="showScreen('map');setNav('map');closeSheet()">
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
         </button>
         <div class="report-title">Notify Me When Quiet</div>
@@ -617,7 +617,7 @@
       <div class="notify-body">
         <div class="notify-card">
           <div class="notify-card-label">Car wash</div>
-          <div class="notify-card-name" id="notify-card-name">ClearSplash Wash</div>
+          <div class="notify-card-name">ClearSplash Wash</div>
         </div>
         <div class="notify-section-title">Alert me when busyness drops to…</div>
         <div class="threshold-options">
@@ -650,17 +650,6 @@
   };
 
   const barColors = { green:'#00c851', amber:'#ffbb33', red:'#ff4444' };
-
-  let selectedWash = { name: 'ClearSplash Wash', dist: '0.4 km', status: 'green', conf: 'high', driveMsg: 'Drive 4 min further → save ~20 min waiting', reports: 5 };
-
-
-  function syncSelectedWash(name, status, dist, conf, driveMsg, reports) {
-    selectedWash = { name, status, dist, conf, driveMsg, reports };
-    const reportSub = document.getElementById('report-subtitle');
-    if (reportSub) reportSub.textContent = name + ' · Right now';
-    const notifyName = document.getElementById('notify-card-name');
-    if (notifyName) notifyName.textContent = name;
-  }
 
   function buildTimeline(type) {
     const bars = document.getElementById('timeline-bars');
@@ -759,9 +748,8 @@
 
   function goReport() {
     closeSheet();
-    const reportSub = document.getElementById('report-subtitle');
-    if (reportSub) reportSub.textContent = selectedWash.name + ' · Right now';
     showScreen('report');
+    setNav('report');
     selectedReport = null;
     ['green','amber','red'].forEach(c => document.getElementById('opt-'+c).className = 'report-option');
     document.getElementById('btn-submit').className = 'btn-submit';
@@ -769,9 +757,8 @@
 
   function goNotify() {
     closeSheet();
-    const notifyName = document.getElementById('notify-card-name');
-    if (notifyName) notifyName.textContent = selectedWash.name;
     showScreen('notify');
+    setNav('notify');
     const btn = document.getElementById('btn-set-notify');
     btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9"/><path d="M18 8c0 7-3 9-3 9H3s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg> Set Alert';
     btn.style.background = 'linear-gradient(135deg,#1a6dff,#0052cc)';
@@ -790,12 +777,15 @@
   function submitReport() {
     if (!selectedReport) return;
     showScreen('thanks');
+    setNav(null);
     document.querySelector('.thanks-sub').textContent = 'You helped 3 drivers avoid a queue just now.';
   }
 
   function quickReport(color) {
     selectedReport = color;
+    closeSheet();
     showScreen('thanks');
+    setNav(null);
     document.querySelector('.thanks-sub').textContent = 'You helped 3 drivers avoid a queue just now.';
   }
 
@@ -809,14 +799,13 @@
     btn.innerHTML = '✓ Alert set!';
     btn.style.background = 'linear-gradient(135deg,#00c851,#00a844)';
     btn.style.boxShadow = '0 4px 24px rgba(0,200,81,0.3)';
-    setTimeout(() => { showScreen('map'); }, 1400);
+    setTimeout(() => { showScreen('map'); setNav('map'); }, 1400);
   }
 
   function showScreen(name) {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-    const el = document.getElementById('screen-' + name);
+    const el = document.getElementById('screen-'+name);
     if (el) el.classList.add('active');
-    setNav(name);
   }
 
   function setNav(name) {
